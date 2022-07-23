@@ -1,4 +1,4 @@
-# wscs
+# wscs WebSocketControlerServer
 npm install wscs <br>
 для браузера <a href="https://github.com/nikolas1370/wscc">тут</a>
 ```
