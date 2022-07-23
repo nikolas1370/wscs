@@ -1,5 +1,5 @@
 # wscs
-в браузері wscc
+в браузері wscc <br>
 npm install wscs
 ```
 
