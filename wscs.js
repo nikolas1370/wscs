@@ -104,7 +104,9 @@ class wscs// WebSocketControlerServer
         {
             ws.close();
             ws.timeoutt = true;
-            ws.eventClose()
+
+            if(typeof(ws.eventClose) === "function")
+                ws.eventClose();
         }
 
         let pong = (ws) =>
@@ -119,7 +121,6 @@ class wscs// WebSocketControlerServer
         this.wsServer.on('connection', (ws) =>
         {
             let events = [] // {event, callback}
-            let eventClose =  voidF;// визивається при закриті сокета
             ws.pingTimer = setTimeout(timeoutFun, 6000, ws); // туди іде 500мс там жде 5000мс і 500мс іде сюда
 
             let on = (event, callback) =>
@@ -275,11 +276,11 @@ class wscs// WebSocketControlerServer
             {      
                 clearTimeout(ws.pingTimer); 
                 events.length = 0
-                if(!ws.timeoutt)
-                    eventClose();
+                if(!ws.timeoutt && typeof(ws.eventClose) === "function")
+                    ws.eventClose();
             });            
             
-            connect(new Connection(on, removeOn, send, (callback) => { eventClose = callback; ws.eventClose = callback}));
+            connect(new Connection(on, removeOn, send, (callback) => {  ws.eventClose = callback}));
         });
     }    
 }
@@ -297,3 +298,8 @@ class Connection
         this.setEventClose = setEventClose;
     }
 }
+
+
+
+
+   
